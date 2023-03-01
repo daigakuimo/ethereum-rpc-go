@@ -24,7 +24,7 @@ type TransferEvent struct {
 
 type balance struct {
 	Address common.Address
-	Value   *big.Int
+	Amount  *big.Int
 }
 
 func main() {
@@ -84,16 +84,16 @@ func main() {
 	// 所持数順にソート
 	// キーと値を格納するスライスを作成
 	var sortBalances []balance
-	for k, v := range balances {
-		sortBalances = append(sortBalances, balance{k, v})
+	for address, amount := range balances {
+		sortBalances = append(sortBalances, balance{address, amount})
 	}
 
 	// スライスをソート
 	sort.Slice(sortBalances, func(i, j int) bool {
-		return sortBalances[i].Value.Cmp(sortBalances[j].Value) > 0
+		return sortBalances[i].Amount.Cmp(sortBalances[j].Amount) > 0
 	})
 
 	for index, balance := range sortBalances {
-		fmt.Println(index, ":", balance.Address, ":", balance.Value)
+		fmt.Println(index, ":", balance.Address, ":", balance.Amount)
 	}
 }
